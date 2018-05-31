@@ -2,15 +2,14 @@
 Simple telegram terminal client with nodejs. A prototype really. No stickers, no photos, just plaintext.
 
 ## Installation
-Get API keys from https://my.telegram.org/
+1. Get API keys from https://my.telegram.org/
+2. Clone and build https://github.com/tdlib/td#building
 ```
 cp config.json.example config.json
 nano config.json
-npm install
-```
-Clone and build https://github.com/tdlib/td#building
-```
 ln -s td/build/libtdjson.so
+sudo npm install -g
+teletappi
 ```
 Done!
 
