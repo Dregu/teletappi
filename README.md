@@ -12,3 +12,12 @@ Clone and build https://github.com/tdlib/td#building
 ln -s td/build/libtdjson.so
 ```
 Done!
+
+## Usage
+TAB: Change active chat
+KEYS: Type message
+ENTER: Send message
+UP/DOWN: Scroll input history
+
+## TODO
+HTTP-server for recvd photos
