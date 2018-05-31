@@ -1,0 +1,27 @@
+{
+  "name": "teletappi",
+  "version": "1.0.0",
+  "description": "Telegram terminal app",
+  "main": "teletappi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dregu/teletappi.git"
+  },
+  "author": "Dregu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dregu/teletappi/issues"
+  },
+  "homepage": "https://github.com/Dregu/teletappi#readme",
+  "dependencies": {
+    "nconf": "^0.10.0",
+    "tdl": "^3.5.2",
+    "terminal-kit": "^1.17.6"
+  },
+  "bin": {
+    "teletappi": "./index.js"
+  }
+}
