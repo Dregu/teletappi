@@ -1,6 +1,7 @@
 # teletappi
 Simple telegram terminal client with nodejs
 ## Installation
+Get API keys from https://my.telegram.org/
 ```
 cp config.json.example config.json
 nano config.json
