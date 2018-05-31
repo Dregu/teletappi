@@ -1,5 +1,6 @@
 # Telegram terminaali appi
-Simple telegram terminal client with nodejs
+Simple telegram terminal client with nodejs. A prototype really. No stickers, no photos, just plaintext.
+
 ## Installation
 Get API keys from https://my.telegram.org/
 ```
