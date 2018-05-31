@@ -1,4 +1,4 @@
-# teletappi
+# Telegram terminaali appi
 Simple telegram terminal client with nodejs
 ## Installation
 Get API keys from https://my.telegram.org/
@@ -14,10 +14,11 @@ ln -s td/build/libtdjson.so
 Done!
 
 ## Usage
-TAB: Change active chat
-KEYS: Type message
-ENTER: Send message
-UP/DOWN: Scroll input history
+
+* TAB: Change active chat
+* KEYS: Type message
+* ENTER: Send message
+* UP/DOWN: Scroll input history
 
 ## TODO
 HTTP-server for recvd photos
