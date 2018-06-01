@@ -24,6 +24,6 @@
     "transliteration": "^1.6.2"
   },
   "bin": {
-    "tilipitappi": "./index.js"
+    "teletappi": "./index.js"
   }
 }

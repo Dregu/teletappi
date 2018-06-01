@@ -206,7 +206,7 @@ async function main() {
 				let channel = '#'+cleanNick(chat.title)
 				con.send(`:telegram 322 ${getIrcdNick()} ${channel} ${chat.unread_count} :${chat.id}`)
 			}
-			con.send(`:telegram 323 ${getIrcdNick} :End of channel list`)
+			con.send(`:telegram 323 ${getIrcdNick()} :End of channel list`)
 		})
 	})
 
