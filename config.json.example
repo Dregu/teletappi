@@ -1,5 +1,16 @@
 {
-  "apiId": 1234,
-  "apiHash": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "phoneNumber": "+1234"
+  "ircd": {
+    "host": "",
+    "port": "6667",
+    "user": "",
+    "pass": "",
+    "autojoin": true
+  },
+  "tg": {
+    "apiId": 1234,
+    "apiHash": "xxxx",
+    "phoneNumber": "+1234"
+  },
+  "chats": {},
+  "users": {}
 }
