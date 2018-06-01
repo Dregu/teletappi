@@ -95,7 +95,7 @@ async function main() {
 		if(message.reply_to_message_id && messages[message.reply_to_message_id]) {
 			let original = messages[message.reply_to_message_id]
 			let reply_text = original.content.text.text
-			if(reply_text.length > 15) reply_text = reply_text.substr(1,15)+'…'
+			if(reply_text.length > 15) reply_text = reply_text.substr(0,15)+'…'
 			reply = '⎡'+getNick(original.sender_user_id)+': '+reply_text+'⎦ '
 		}
 		messages[message.id] = message
