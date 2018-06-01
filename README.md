@@ -19,6 +19,8 @@ All your open chats have a default channel you can join, but you can also use sh
 
 You will subscribe to all your chats regardless of joining them explicitly if *autojoin* is enabled in config. You can unsubscribe from the spam in your status window with */part #channel*.
 
+Photos are saved in *\_td\_files/photos*, get your own http server and configure *http.baseUrl* if you want pretty links in irc.
+
 ### Supported IRC commands
 Command | Parameters | Explanation
 --- | --- | ---
@@ -31,6 +33,4 @@ NAMES | <#channel> | Get nicklist
 WHO | <#channel> | List channel user info
 
 ## TODO
-* Testing
-* HTTP-server for recvd photos
-* NAMES and other shit
+* Can't think of anything right now :)

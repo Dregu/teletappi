@@ -11,6 +11,9 @@
     "apiHash": "xxxx",
     "phoneNumber": "+1234"
   },
+  "http": {
+    "baseUrl": "http://localhost:18080/"
+  },
   "chats": {},
   "users": {}
 }

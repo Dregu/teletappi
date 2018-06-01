@@ -8,7 +8,7 @@ const db = low(adapter)
 const ircdkit = require('ircdkit')
 const tr = require('transliteration').transliterate
 
-var messages = {}
+var messages = {}, photos = {}
 
 db.defaults({
 	ircd: {
@@ -22,6 +22,9 @@ db.defaults({
 		apiId: 1234,
 		apiHash: 'xxxx',
 		phoneNumber: '+1234'
+	},
+	http: {
+		baseUrl: ''
 	},
 	chats: {},
 	users: {}
@@ -40,6 +43,8 @@ async function main() {
 		if(update._ == 'updateNewMessage') {
 			if(update.message.content._ == 'messageText') {
 				updateNewMessage(update.message)
+			} else if(update.message.content._ == 'messagePhoto') {
+				updateNewPhoto(update.message)
 			}
 		} else if(update._ == 'updateMessageSendSucceeded') {
 			if(update.message.content._ == 'messageText') {
@@ -47,6 +52,8 @@ async function main() {
 			}
 		} else if(update._ == 'updateUser') {
 			updateUser(update.user)
+		} else if(update._ == 'updateFile') {
+			updateFile(update.file)
 		}
 		//console.log('Got update:', JSON.stringify(update, null, 2))
 	}).on('error', err => {
@@ -102,6 +109,25 @@ async function main() {
 		message.replybox = reply
 		if(message.sending_state && message.sending_state._ == 'messageSendingStatePending') return
 		ircdmsg(message)
+	}
+
+	async function updateNewPhoto(message) {
+		if(message.content._ != 'messagePhoto' || messages[message.id]) return
+		messages[message.id] = message
+		let fileid = message.content.photo.sizes[message.content.photo.sizes.length-1].photo.id
+		if(!fileid) return
+		client.invoke({
+			_: 'downloadFile',
+			file_id: fileid,
+			priority: 1
+		})
+		photos[fileid] = message
+	}
+
+	async function updateFile(file) {
+		if(photos[file.id] && file.local.is_downloading_completed && file.local.path) {
+			ircdmsgphoto(photos[file.id], file.local.path)
+		}
 	}
 
 	async function updateMessageSendSucceeded(message) {
@@ -231,6 +257,7 @@ async function main() {
 	})
 
 	async function ircNames(con, channel) {
+		if(!getChat(channel)) return
 		const members = await client.invoke({
 			_: 'searchChatMembers',
 			chat_id: getChat(channel),
@@ -363,6 +390,26 @@ async function main() {
 			}
 		}
 	}
+
+	function ircdmsgphoto(message, path) {
+		var mask = getMask(message.sender_user_id)
+		var url = db.get('http.baseUrl')+(path.split('/'))[path.split('/').length-1]
+		var text = `Photo: ${url} "${message.content.caption.text}"`
+		var channel = getChannel(message.chat_id)
+		if(!channel) return
+		text = text.split('\n')
+		for(let line of text) {
+			if(!line) continue
+			msg = ':'+mask+' PRIVMSG '+channel+' :'+line
+			log(`To irc ${msg}`)
+			for (var i in irc._connections) {
+				if (!irc._connections[i]._socket.destroyed) {
+					irc._connections[i].send(msg);
+				}
+			}
+		}
+	}
+
 }
 process.on('uncaughtException', function (er) {
 	console.error(er.stack)
