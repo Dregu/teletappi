@@ -27,6 +27,8 @@ JOIN | <#channel> [chatid] | Subscribe to an open telegram chat as #channel |
 PART | <#channel> | Unsubscribe from chat linked to #channel. Won't affect your real chats |
 PRIVMSG | <#channel or nick> :\<message\> | Send a message
 WHOIS | <#channel or nick> | Get the real name and chatid of a user or channel
+NAMES | <#channel> | Get nicklist
+WHO | <#channel> | List channel user info
 
 ## TODO
 * Testing

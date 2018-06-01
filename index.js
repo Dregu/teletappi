@@ -48,7 +48,7 @@ async function main() {
 		} else if(update._ == 'updateUser') {
 			updateUser(update.user)
 		}
-		console.log('Got update:', JSON.stringify(update, null, 2))
+		//console.log('Got update:', JSON.stringify(update, null, 2))
 	}).on('error', err => {
 		console.error('Got error:', JSON.stringify(err, null, 2))
 	})
@@ -80,7 +80,7 @@ async function main() {
 	}
 
 	async function updateUser(user) {
-		log(`User ${user.id} is ${user.username} (${user.first_name} ${user.last_name})`)
+		//log(`User ${user.id} is ${user.username} (${user.first_name} ${user.last_name})`)
 		var newUser = {
 			nick: cleanNick(user.username ? user.username : user.first_name + user.last_name ),
 			realName: (user.first_name+' '+user.last_name).trim(),
@@ -150,7 +150,7 @@ async function main() {
 		con.on('PING', function(target) {
 			con.send('PONG '+target)
 		})
-		con.on('JOIN', function(channel, pass = '') {
+		con.on('JOIN', async function(channel, pass = '') {
 			log(`JOIN ${channel} ${pass}`)
 			if(!channel) return
 			channel = channel.split(',')
@@ -164,6 +164,7 @@ async function main() {
 					setChannel(channel[i], pass[i])
 				}
 				con.send(getIrcdMask()+' JOIN :'+channel[i])
+				ircNames(con, channel[i])
 			}
 		})
 		con.on('PART', function(channel, reason) {
@@ -208,7 +209,49 @@ async function main() {
 			}
 			con.send(`:telegram 323 ${getIrcdNick()} :End of channel list`)
 		})
+		con.on('WHO', async function(channel) {
+			if(!getChat(channel)) return
+			const members = await client.invoke({
+				_: 'searchChatMembers',
+				chat_id: getChat(channel),
+				limit: 5000,
+				query: ''
+			})
+			for(let member of members.members) {
+				let nick = getNick(member.user_id)
+				if(!nick) continue
+				let user = member.user_id
+				con.send(`:telegram 352 ${getIrcdNick()} ${channel} ${getUserName(user)} tg tg ${nick} H 1234 :0 ${getRealName(user)}`)
+			}
+			con.send(`:telegram 315 ${getIrcdNick()} ${channel} :End of WHO list.`)
+		})
+		con.on('NAMES', async function(channel) {
+			ircNames(con, channel)
+		})
 	})
+
+	async function ircNames(con, channel) {
+		const members = await client.invoke({
+			_: 'searchChatMembers',
+			chat_id: getChat(channel),
+			limit: 5000,
+			query: ''
+		})
+		var names = []
+		for(let member of members.members) {
+			if(names.length > 10) {
+				names = names.join(' ')
+				con.send(`:telegram 353 ${getIrcdNick()} = ${channel} :${names}`)
+				names = []
+			}
+			let nick = getNick(member.user_id)
+			if(!nick) continue
+			names.push(nick)
+		}
+		names = names.join(' ')
+		con.send(`:telegram 353 ${getIrcdNick()} = ${channel} :${names}`)
+		con.send(`:telegram 366 ${getIrcdNick()} ${channel} :End of NAMES list.`)
+	}
 
 	function log(...msg) {
 		console.log(...msg)
