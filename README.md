@@ -33,4 +33,4 @@ NAMES | <#channel> | Get nicklist
 WHO | <#channel> | List channel user info
 
 ## TODO
-* Can't think of anything right now :)
+* You know what this thing needs? ASCII stickers amirite
