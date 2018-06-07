@@ -1,4 +1,4 @@
-# tilipitappi
+# teletappi
 
 Simple telegram to ircd client with nodejs. Use telegram with irssi or weechat!
 
@@ -33,4 +33,4 @@ NAMES | <#channel> | Get nicklist
 WHO | <#channel> | List channel user info
 
 ## TODO
-* You know what this thing needs? ASCII stickers amirite
+* You know what this thing needs? ASCII stickers amirite ^/s^
