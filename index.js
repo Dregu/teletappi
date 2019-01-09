@@ -33,10 +33,7 @@ db.defaults({
 async function main() {
 	const client = new Client({
 		apiId: db.get('tg.apiId').value(),
-		apiHash: db.get('tg.apiHash').value(),
-		loginDetails: {
-			phoneNumber: db.get('tg.phoneNumber').value()
-		}
+		apiHash: db.get('tg.apiHash').value()
 	})
 
 	client.on('update', update => {
@@ -61,6 +58,10 @@ async function main() {
 	})
 
 	await client.connect()
+	await client.login(() => ({
+		phoneNumber: db.get('tg.phoneNumber').value()
+	}))
+
 
 	async function getChats() {
 		const ids = await client.invoke({

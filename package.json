@@ -1,6 +1,6 @@
 {
-  "name": "tilipitappi",
-  "version": "1.0.0",
+  "name": "teletappi",
+  "version": "1.0.1",
   "description": "Telegram client as an irc daemon",
   "main": "index.js",
   "scripts": {
@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dregu/tilipitappi.git"
+    "url": "git+https://github.com/Dregu/teletappi.git"
   },
   "author": "Dregu",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Dregu/tilipitappi/issues"
+    "url": "https://github.com/Dregu/teletappi/issues"
   },
-  "homepage": "https://github.com/Dregu/tilipitappi#readme",
+  "homepage": "https://github.com/Dregu/teletappi#readme",
   "dependencies": {
     "ircdkit": "^1.0.3",
     "lowdb": "^1.0.0",
-    "tdl": "^3.5.2",
+    "tdl": "^5.2.0",
     "transliteration": "^1.6.2"
   },
   "bin": {
